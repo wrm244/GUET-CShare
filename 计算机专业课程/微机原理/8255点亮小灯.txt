@@ -1,0 +1,51 @@
+;输入一个字符 如果不是数字让L7闪10次
+CODE SEGMENT
+ASSUME CS:CODE
+    
+  DELAY PROC NEAR   ;延迟程序
+    PUSH CX
+    PUSH DI
+    MOV CX,1000H
+  Y1:MOV DI,1000H
+  X1:DEC DI
+     JNZ X1
+     LOOP Y1
+     POP DI
+     POP CX
+     RET
+  DELAY ENDP
+        
+        
+        
+  START:MOV AH,01H      ;从键盘输入一个字符
+        INT 21H         
+        CMP AL,'0'      ;与0比较
+        JB LED          ;小于0，则开始闪烁
+        CMP AL,'9'      ;与9比较
+        JA LED          ;大于9，开始闪烁
+        JMP EXIT        ;如果是数字的话，终止程序
+        
+  
+    LED:MOV AL,80H      ;设置输出方式，跟交通灯一样的
+        MOV DX,28BH     ;28BH是控制字寄存器
+        OUT DX,AL       ;初始化8255
+        MOV CX,10       ;因为要闪烁10次，所以cx设置为10次，循环10次
+        
+ LOO:   MOV AL,80H      ;这里的80H，跟上面的含义不一样，可以从LED灯的图片看出
+        MOV DX,28AH     ;这个地方采用了C口方式输出，可以根据自己的需要改为别的方式
+        OUT DX,AL       ;点亮黄灯
+        CALL DELAY      ;使用延迟程序
+        MOV AL,00H      ;熄灭黄灯
+        MOV DX,28AH     ;这个地方采用了C口方式输出，可以根据自己的需要改为别的方式
+        OUT DX,AL       ;熄灭黄灯
+        CALL DELAY      ;使用延迟程序
+        LOOP LOO        ;循环
+    
+         
+    EXIT:MOV AH,4CH
+         INT 21H 
+
+CODE ENDS
+
+END START
+

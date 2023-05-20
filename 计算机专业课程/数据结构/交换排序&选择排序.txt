@@ -1,0 +1,230 @@
+冒泡
+#include <stdio.h>
+void print ( int a[], int n )
+{
+	//输出数组元素，数字之间以一个空格为界，输出结束后换一行
+	int i ;
+	for ( i = 0; i < n; i++ )
+	{
+		printf ( "%d ", a[i] );
+	}
+	printf ( "\n" );
+
+
+}
+
+void bubbleSort ( int a[], int n ) //对数组a中的n个元素进行排序，调用print函数输出每趟排序后的结果
+{
+	int i, j, temp, noswap, b[n];
+	int arraysEqual = 1;
+	int count = 0;
+
+	for ( i = 0 ; i < n ; i++ )
+	{
+		b[i] = a[i];
+	}
+
+	for ( i = 0; i < n - 1; i++ )
+	{
+		noswap = 1;
+		for ( j = 0; j < n - i - 1; j++ )
+			if ( a[j] > a[j + 1] )
+			{
+				temp = a[j];
+				a[j] = a[j + 1];
+				a[j + 1] = temp;
+				noswap = 0;
+			}
+		if ( noswap )
+			break;
+		print ( a, n );
+	}
+	while ( arraysEqual && count < n ) //对数据进行判断，如果排序后数组和排序前相等则标记
+	{
+		if ( a[count] != b[count] )
+			arraysEqual = 0;
+		count++;
+	}
+	if ( arraysEqual )
+		print ( a, n ); //标记为相等则输出原数组
+}
+
+int main ( void )
+{
+	int num ;
+	scanf ( "%d", &num );
+	int data[num];
+	for ( int i = 0; i < num; i++ )
+		scanf ( "%d", &data[i] );
+
+	bubbleSort ( data, num );
+}
+
+快速
+#include <stdio.h>
+void print ( int a[], int n )
+{
+	//输出数组元素，数字之间以一个空格为界，输出结束后换一行
+	int i ;
+	for ( i = 0; i < n; i++ )
+	{
+		printf ( "%d ", a[i] );
+	}
+	printf ( "\n" );
+}
+
+void qSort ( int a[], int left, int right ) //
+{
+	if ( left < right )
+	{
+		int i, j, temp;
+
+		i = left ;
+		j = right ;
+		temp = a[i];
+		while ( i < j )
+		{
+			while ( i < j && a[j] >= temp )
+				j--;
+			if ( i < j )
+				a[i++] = a[j];
+			while ( i < j && a[i] <= temp )
+				i++;
+			if ( i < j )
+				a[j--] = a[i];
+		}
+		a[i] = temp;
+		print ( a, right + 1 );
+		qSort ( a, left, i - 1 );
+		qSort ( a, i + 1, right );
+	}
+}
+
+int main ( void )
+{
+	int num ;
+	scanf ( "%d", &num );
+	int data[num];
+	for ( int i = 0; i < num; i++ )
+		scanf ( "%d", &data[i] );
+
+	qSort ( data, 0, num - 1 );
+	print ( data, num );
+}
+
+直接选择
+#include <stdio.h>
+void print ( int a[], int n )
+{
+	//输出数组元素，数字之间以一个空格为界，输出结束后换一行
+	int i ;
+	for ( i = 0; i < n; i++ )
+	{
+		printf ( "%d ", a[i] );
+	}
+	printf ( "\n" );
+
+
+}
+
+void selectSort ( int a[], int n ) //对数组a中的n个元素进行排序，调用print函数输出每趟排序后的结果
+{
+	int i, j, k, temp;
+	for ( i = 0 ; i < n - 1 ; i++ )
+	{
+		k = i;
+		for ( j = i + 1 ; j < n ; j++ )
+			if ( a[j] < a[k] )
+				k = j ;
+		if ( k != i )
+		{
+			temp = a[i];
+			a[i] = a[k];
+			a[k] = temp;
+		}
+		print ( a, n );
+	}
+
+
+
+}
+
+
+int main ( void )
+{
+	int num ;
+	scanf ( "%d", &num );
+	int data[num];
+	for ( int i = 0; i < num; i++ )
+		scanf ( "%d", &data[i] );
+
+	selectSort ( data, num );
+}
+
+
+堆
+#include <stdio.h>
+void print ( int a[], int n )
+{
+	//输出数组元素，数字之间以一个空格为界，输出结束后换一行
+	int i ;
+	for ( i = 0; i < n; i++ )
+	{
+		printf ( "%d ", a[i] );
+	}
+	printf ( "\n" );
+
+
+}
+
+void heapSort ( int a[], int n ) //
+{
+	int i, temp;
+	for ( i = n / 2 - 1; i >= 0; i-- )
+		sift ( a, n, i );
+	for ( i = n - 1; i > 0; i-- )
+	{
+		temp = a[0];
+		a[0] = a[i];
+		a[i] = temp;
+		sift ( a, i, 0 );
+		print ( a, n );
+	}
+
+
+
+}
+
+//根据需要自己添加其他需要的函数
+void sift ( int a[], int size, int p )
+{
+	int temp = a[p];
+	int child = 2 * p + 1;
+	while ( child < size )
+	{
+		if ( ( child < size - 1 ) && ( a[child] < a[child + 1] ) )
+			child++;
+		if ( temp < a[child] )
+		{
+			a[p] = a[child];
+			p = child;
+			child = 2 * p + 1;
+		}
+		else
+			break;
+	}
+	a[p] = temp;
+}
+
+
+int main ( void )
+{
+	int num ;
+	scanf ( "%d", &num );
+	int data[num];
+	for ( int i = 0; i < num; i++ )
+		scanf ( "%d", &data[i] );
+
+	heapSort ( data, num );
+}
+
