@@ -1,10 +1,8 @@
-## 桂林电子科技大学计算机科学与技术课程攻略共享计划 [<img src="./计算机专业课程/学院.png" width="90" height="90" align="right">](https://www.guet.edu.cn/dept3/)
-
-## 目录
+## 桂林电子科技大学计算机科学与技术课程攻略共享计划 [<img src="./计算机专业课程/学院.png" width="100" height="100" align="right">](https://www.guet.edu.cn/dept3/)
 
 ```shell
 ├─计算机专业课程
-│  ├─微机原理s
+│  ├─微机原理
 │  ├─操作系统
 │  ├─数字电路基础
 │  ├─数据库原理与设计
